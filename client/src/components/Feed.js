@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Feed, Icon, Header, Popup, Modal, Form, Input, Message, Button } from 'semantic-ui-react'
+import { Feed, Icon, Popup, Modal, Form, Input, Button, Confirm } from 'semantic-ui-react'
 import Moment from 'react-moment';
 import API from "../utils/API";
 import MessageNegative  from "./ErrorMsg";
@@ -8,12 +8,15 @@ class FeedComponent extends Component {
   
   state = {
     email: '',
-    message: true
+    message: true,
+    open: false
   }
 
   handleOpen = () => this.setState({ modalOpen: true })
-
   handleClose = () => this.setState({ modalOpen: false })
+
+  show = () => this.setState({ open: true })
+  handleCancel = () => this.setState({ open: false })
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -34,12 +37,18 @@ class FeedComponent extends Component {
     this.setState({email: ''})
   }
 
+  handleFlag = (id) => {
+    this.setState({ open: false })
+    API.updateHack(id, {
+      flagged: true
+    })
+      .then(res => this.props.loadHacks() )
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <Feed>
-        <Header as='h2' block>
-        <Header.Content>{this.props.title}</Header.Content>
-        </Header>
         {this.props.hacks.map(hack => (
           <Feed.Event key={hack._id}>
             <Feed.Label image={hack.image} />
@@ -51,14 +60,13 @@ class FeedComponent extends Component {
               dimmer='inverted'
               open={this.modalOpen}
               onClose={this.handleClose}>
-              <Modal.Header>Delete Your Post</Modal.Header>
+              <Modal.Header>Delete Post</Modal.Header>
                 <Modal.Content>
                   <p>Enter the email associated with this post:</p>
                   <Form>
-                    <Form.Input label='Email' placeholder='joe@schmoe.com'
+                    <Form.Input placeholder='joe@schmoe.com'
                       name='email'
                       control={Input}
-                      label='Email'
                       value = {this.state.email}
                       onChange={this.handleInputChange} />
                       <MessageNegative error={this.state.message} />
@@ -71,9 +79,16 @@ class FeedComponent extends Component {
               />
               <Popup
               trigger={
-              <a><Icon color = 'red' name='flag' onClick = {() => this.props.handleFlag(hack._id)}/></a>}
+              <a><Icon color = 'red' name='flag' onClick = {this.show}/></a>}
               content="Flag if deemed inappropriate or with suspicious link. Admin will review all flagged posts."
               basic
+              />               
+              <Confirm
+              open={this.state.open}
+              header='This post will be flagged as either inappropriate or suspicious. It will be subject to review.' 
+              content='Are you sure you want to proceed with this action?'
+              onCancel={this.handleCancel}
+              onConfirm = { () => this.handleFlag(hack._id) }
               />
               <Feed.Summary>
                 {hack.name} posted:
@@ -92,9 +107,10 @@ class FeedComponent extends Component {
             </Feed.Content>
           </Feed.Event>
         ))}
-      </Feed>
+      </Feed> 
     );
   }
 }
 
 export default FeedComponent;
+

@@ -9,12 +9,12 @@ body {
     font-weight: 900;
     color: #f03f35;
     background: #b7e3e4;
-    font-size: 50px;
-    width: 200px;
+    font-size: 35px;
+    width: 150px;
     border-radius: 15px 15px 0px 5px;
     text-align: center;
    }
-   
+
    .ui.grid {
     margin-top: -1.8rem;
    }

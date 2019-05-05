@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, TextArea, Button, Popup, Modal, Image } from 'semantic-ui-react'
+import { Form, Input, TextArea, Button, Popup, Modal } from 'semantic-ui-react'
 import API from "../utils/API";
 
 const avatars = [
@@ -106,7 +106,7 @@ class FormComponent extends Component {
 
   render() {
     return (
-      <Modal trigger={<Button onClick={this.handleOpen}>Got a hack?</Button>}
+      <Modal trigger={<Button onClick={this.handleOpen}>Post a hack</Button>}
       size = 'tiny'
       dimmer='inverted'
       open={this.modalOpen}
