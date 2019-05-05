@@ -9,6 +9,7 @@ const hackSchema = new Schema({
   email: String,
   image: String,
   link: String,
+  flagged: Boolean,
   date: { type: Date, default: Date.now }
 });
 

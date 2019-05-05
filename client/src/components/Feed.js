@@ -1,54 +1,80 @@
 import React, { Component } from 'react'
-import { Feed, Icon } from 'semantic-ui-react'
-import API from "../utils/API";
+import { Feed, Icon, Header, Popup, Modal, Form, Input, Message, Button } from 'semantic-ui-react'
 import Moment from 'react-moment';
+import API from "../utils/API";
+import MessageNegative  from "./ErrorMsg";
 
 class FeedComponent extends Component {
   
   state = {
-    hacks: [],
-    top5arr: [],
-    recent: [],
-    meta: 0
-  };
-
-  componentDidMount() {
-  this.loadHacks();
+    email: '',
+    message: true
   }
 
-  loadHacks = () => {
-    API.getHacks()
-      .then(res => {
-        console.log(res.data)
-        this.setState({ hacks: res.data})
-        this.state.hacks.sort(function (a, b) {
-          if (a.meta < b.meta) {
-            return 1;
-        } else {
-            return -1
-        }})
-        this.setState({ top5arr: this.state.hacks.slice(0,5)})
-      }).catch(err => console.log(err));
+  handleOpen = () => this.setState({ modalOpen: true })
+
+  handleClose = () => this.setState({ modalOpen: false })
+
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
   };
 
-  handleClick = (id) => {
-    let index = this.state.hacks.indexOf(id);
-    console.log(index);
-    /*this.setState({meta: this.state.hacks[index].meta + 1})
-    API.updateHack(id, {
-      meta: this.state.meta
-    })
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err));*/
+  handleDelete = (id, email) => {
+
+    if (email === this.state.email) {
+      API.deleteHack(id)
+      .then(res => this.props.loadHacks())
+      .catch(err => console.log(err));    
+    } else
+      this.setState({message: false})
+
+    this.setState({email: ''})
   }
 
   render() {
     return (
       <Feed>
-        {this.state.top5arr.map(hack => (
-          <Feed.Event>
+        <Header as='h2' block>
+        <Header.Content>{this.props.title}</Header.Content>
+        </Header>
+        {this.props.hacks.map(hack => (
+          <Feed.Event key={hack._id}>
             <Feed.Label image={hack.image} />
             <Feed.Content>
+              <Popup
+              trigger={
+              <Modal trigger={<a><Icon name='delete'onClick={this.handleOpen} /></a>}
+              size='mini'
+              dimmer='inverted'
+              open={this.modalOpen}
+              onClose={this.handleClose}>
+              <Modal.Header>Delete Your Post</Modal.Header>
+                <Modal.Content>
+                  <p>Enter the email associated with this post:</p>
+                  <Form>
+                    <Form.Input label='Email' placeholder='joe@schmoe.com'
+                      name='email'
+                      control={Input}
+                      label='Email'
+                      value = {this.state.email}
+                      onChange={this.handleInputChange} />
+                      <MessageNegative error={this.state.message} />
+                    <Button onClick = {() => this.handleDelete(hack._id, hack.email)}>Submit</Button>
+                  </Form>
+                </Modal.Content>
+              </Modal>}
+              content="Delete post. Email associated with this post is required."
+              basic
+              />
+              <Popup
+              trigger={
+              <a><Icon color = 'red' name='flag' onClick = {() => this.props.handleFlag(hack._id)}/></a>}
+              content="Flag if deemed inappropriate or with suspicious link. Admin will review all flagged posts."
+              basic
+              />
               <Feed.Summary>
                 {hack.name} posted:
                 <Feed.Date><Moment fromNow>{hack.date}</Moment></Feed.Date>
@@ -59,7 +85,7 @@ class FeedComponent extends Component {
               <a href={hack.link} target="blank">{hack.link}</a><br></br>
               <Feed.Meta>
                 <Feed.Like>
-                  <Icon name='like' onClick = {this.handleClick(hack._id)} />
+                  <Icon color='red' name='like'  onClick = {() => this.props.handleClick(hack._id, hack.meta)} />
                   {hack.meta} Likes
                 </Feed.Like>
               </Feed.Meta>
@@ -70,4 +96,5 @@ class FeedComponent extends Component {
     );
   }
 }
+
 export default FeedComponent;
