@@ -33,7 +33,8 @@ class App extends Component {
       .then(res => console.log(res.data))
       .catch(err => console.log(err));
     
-    window.location.reload()
+    this.loadHacks()
+    
     }
 
   loadHacks = () => {
