@@ -40,9 +40,9 @@ class App extends Component {
           }})
           this.setState({ top5arr: this.state.filteredhacks.slice(0,5)}) 
           this.setState({ panes : [
-            { menuItem: 'Search-acks', render: () => <Tab.Pane attached={false}><SearchComponent filteredhacks={this.state.filteredhacks}/></Tab.Pane> },
-            { menuItem: 'Hack New(s)', render: () => <Tab.Pane attached={false}><Header as='h4' block><Header.Content>Recently Added</Header.Content></Header><FeedComponent hacks={this.state.recent} handleFlag={this.handleFlag} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
-            { menuItem: 'High Five', render: () => <Tab.Pane attached={false}><Header as='h4' block><Header.Content>Top 5 Most Likes</Header.Content></Header><FeedComponent hacks={this.state.top5arr} handleFlag={this.handleFlag} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
+            { menuItem: 'searcHacks', render: () => <Tab.Pane attached={false}><SearchComponent filteredhacks={this.state.filteredhacks}/></Tab.Pane> },
+            { menuItem: 'New(s)', render: () => <Tab.Pane attached={false}><Header as='h4' block><Header.Content>Just In</Header.Content></Header><FeedComponent hacks={this.state.recent} handleFlag={this.handleFlag} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
+            { menuItem: 'Hi Five', render: () => <Tab.Pane attached={false}><Header as='h4' block><Header.Content>Top 5 Most Likes</Header.Content></Header><FeedComponent hacks={this.state.top5arr} handleFlag={this.handleFlag} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
             { menuItem: 'WT-Hack', render: () => <Tab.Pane attached={false}><Header as='h4' inverted color='red' block><Header.Content>Flagged for Review (Admin Access Only)</Header.Content></Header></Tab.Pane> }
            
           ]})
