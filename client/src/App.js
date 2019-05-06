@@ -19,7 +19,21 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.loadHacks();
+    //this.loadHacks();
+    API.saveHack({
+      name: 'Brian',
+      meta: Math.floor((Math.random() * 100) + 1),
+      image: 'https://react.semantic-ui.com/images/avatar/small/tom.jpg',
+      email: 'doybrian@yahoo.com',
+      tag: 'test',
+      link: '',
+      flagged: false,
+      summary: 'Test'
+    })
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
+    
+    window.location.reload()
     }
 
   loadHacks = () => {
