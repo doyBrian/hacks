@@ -47,7 +47,10 @@ class FeedComponent extends Component {
   }
 
   render() {
-    return (
+    if (this.props.hacks.length === 0) {
+      return (<h2>Nothing To Display</h2>)
+    } else 
+    return ( 
       <Feed>
         {this.props.hacks.map(hack => (
           <Feed.Event key={hack._id}>
