@@ -70,7 +70,7 @@ class FormComponent extends Component {
         meta: Math.floor((Math.random() * 100) + 1),
         image: avatars[Math.floor(Math.random()*avatars.length)],
         email: this.state.email,
-        tag: this.state.tag.toUpperCase(),
+        tag: this.state.tag,
         link: this.state.link,
         flagged: false,
         summary: this.state.summary
@@ -111,7 +111,7 @@ class FormComponent extends Component {
       dimmer='inverted'
       open={this.modalOpen}
       onClose={this.handleClose}>
-      <Modal.Header>Lit A F-orm</Modal.Header>
+      <Modal.Header>Share a life hack!</Modal.Header>
       <Modal.Content>
       <Form>
         <Form.Group widths='equal'>
