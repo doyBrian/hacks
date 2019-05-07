@@ -76,7 +76,7 @@ class App extends Component {
               <Grid.Row>
                 <Grid.Column>
                   <Header as='h2' content='Welcome Life Hackers!' />
-                  Have a (ding!) lightbulb moment? <Icon color='yellow' size='large' name='lightbulb' />
+                  Had a lightbulb moment? (ding!) <Icon color='yellow' size='large' name='lightbulb' />
                   <FormComponent loadHacks={this.loadHacks} />
                 </Grid.Column>
                 <Divider /> 

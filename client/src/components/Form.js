@@ -106,12 +106,12 @@ class FormComponent extends Component {
 
   render() {
     return (
-      <Modal trigger={<Button onClick={this.handleOpen}>Post a hack</Button>}
+      <Modal trigger={<Button onClick={this.handleOpen}>Post it!</Button>}
       size = 'tiny'
       dimmer='inverted'
       open={this.modalOpen}
       onClose={this.handleClose}>
-      <Modal.Header>Share a life hack!</Modal.Header>
+      <Modal.Header>Ready to be mind-blown!</Modal.Header>
       <Modal.Content>
       <Form>
         <Form.Group widths='equal'>
