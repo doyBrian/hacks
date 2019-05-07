@@ -4,7 +4,7 @@ import { Message } from 'semantic-ui-react'
 const MessageNegative = (props) => (
   <Message error = {props.error} color = 'red'>
     <Message.Header>Action Forbidden</Message.Header>
-    <p>Please enter a vaild email address.</p>
+    <p>Input invalid. Try again.</p>
   </Message>
 )
 

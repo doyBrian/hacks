@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { Container, Grid, Image, Divider, Tab, Header, Icon, Segment } from 'semantic-ui-react'
 import FeedComponent  from "./components/Feed";
+import MiniFeed  from "./components/SingleFeed";
 import FormComponent  from "./components/Form";
+import SearchComponent from './components/Search';
+import CardGroups from './components/Card';
 import API from "./utils/API";
 import "./style.css";
-import SearchComponent from './components/Search';
+
 
 class App extends Component {
 
@@ -19,7 +22,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.loadHacks();
+    this.loadHacks()
     }
 
   loadHacks = () => {
@@ -28,8 +31,7 @@ class App extends Component {
           console.log(res.data)
           this.setState({ hacks: res.data });
           this.setState({ filteredhacks: this.state.hacks.filter(hack => hack.flagged !== true) })
-          this.setState({ hackoftheday: [] })
-          this.setState({ hackoftheday: [...this.state.hackoftheday, this.state.filteredhacks[Math.floor(Math.random() * this.state.filteredhacks.length)]] })
+          this.setState({ hackoftheday: this.state.filteredhacks[Math.floor(Math.random() * this.state.filteredhacks.length)]})
           this.setState({ recent: this.state.filteredhacks.slice(0,5)})
           this.setState({ flaggedhacks: this.state.hacks.filter(hack => hack.flagged === true) })
           this.state.filteredhacks.sort(function (a, b) {
@@ -40,15 +42,13 @@ class App extends Component {
           }})
           this.setState({ top5arr: this.state.filteredhacks.slice(0,5)}) 
           this.setState({ panes : [
-            { menuItem: 'searcHacks', render: () => <Tab.Pane attached={false}><SearchComponent filteredhacks={this.state.filteredhacks}/></Tab.Pane> },
-            { menuItem: 'New(s)', render: () => <Tab.Pane attached={false}><Header as='h4' block><Header.Content>Just In</Header.Content></Header><FeedComponent hacks={this.state.recent} handleFlag={this.handleFlag} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
-            { menuItem: 'Hi Five', render: () => <Tab.Pane attached={false}><Header as='h4' block><Header.Content>Top 5 Most Likes</Header.Content></Header><FeedComponent hacks={this.state.top5arr} handleFlag={this.handleFlag} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
-            { menuItem: 'WT-Hack', render: () => <Tab.Pane attached={false}><Header as='h4' inverted color='red' block><Header.Content>Flagged for Review (Admin Access Only)</Header.Content></Header></Tab.Pane> }
-           
+            { menuItem: 'New(s)', render: () => <Tab.Pane renderActiveOnly={false} attached={false}><Header as='h4' block><Header.Content>Just In!</Header.Content></Header><FeedComponent hacks={this.state.recent} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
+            { menuItem: 'Hi Five', render: () => <Tab.Pane renderActiveOnly={false} attached={false}><Header as='h4' block><Header.Content>Top 5 Most Likes</Header.Content></Header><FeedComponent hacks={this.state.top5arr} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
+            { menuItem: 'searcHacks', render: () => <Tab.Pane renderActiveOnly={false} attached={false}><SearchComponent filteredhacks={this.state.filteredhacks} loadHacks={this.loadHacks} /></Tab.Pane> },
+            { menuItem: 'WT-Hack', render: () => <Tab.Pane renderActiveOnly={false} attached={false}><Header as='h4' inverted color='red' block><Header.Content>Flagged for Review (Admin Access Only)</Header.Content></Header><CardGroups hacks={this.state.flaggedhacks} loadHacks={this.loadHacks} /></Tab.Pane> }    
           ]})
         }).catch(err => console.log(err));
     };
-
 
   handleClick = (id, meta) => {
     API.updateHack(id, {
@@ -81,7 +81,7 @@ class App extends Component {
               <Grid.Row>
               <Segment secondary>
               <Header as='h4' color='teal' attached='top'><Header.Content>Hack Of The (H.O.T) Moment</Header.Content></Header>
-              <FeedComponent hacks={this.state.hackoftheday} handleFlag={this.handleFlag} handleClick={this.handleClick} loadHacks={this.loadHacks}/>
+              <MiniFeed hack={this.state.hackoftheday} handleClick={this.handleClick} loadHacks={this.loadHacks} filteredhacks={this.state.filteredhacks} />
               </Segment>
               </Grid.Row>
               </Grid.Column> 
