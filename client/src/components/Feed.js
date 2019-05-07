@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Feed, Icon, Popup, Modal, Form, Input, Button } from 'semantic-ui-react'
+import { Feed, Icon, Modal, Form, Input, Button } from 'semantic-ui-react'
 import Moment from 'react-moment';
 import API from "../utils/API";
 import MessageNegative  from "./ErrorMsg";
@@ -9,6 +9,7 @@ class FeedComponent extends Component {
   state = {
     email: '',
     message: true,
+    modalOpen: false 
   }
 
   handleOpen = () => this.setState({ modalOpen: true })

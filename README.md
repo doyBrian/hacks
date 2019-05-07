@@ -1,68 +1,48 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# hacks
+A simple yet versatile web platform for users to post or share their own, read or search life hacks contributed by other users.
 
-## Available Scripts
+### Deployed App Link
+https://hacks-app.herokuapp.com/
 
-In the project directory, you can run:
 
-### `npm start`
+### Design Plan
+This project follows the MVC design pattern - uses Node and Express Web Server to query and route data in the app, MongoDB for Database and Mongoose for ORM.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* Has the full CRUD (create, read, update and delete) functionality.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+* Utilizes Semantic UI React Integrated library for front end layout and design.
 
-### `npm test`
+* The web app is a Single Page Application with components that render dynamic data.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* The web app is also mobile responsive.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Overview
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+* App has a landing page in modal form which introduces the user to the name and concept of the site.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* There is no log-in required. The idea is to have the sense of anonymity emulating a hacker. 
 
-### `npm run eject`
+* The main page is where life hacks can be posted, viewed and searched.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* Page content is laid out in grid form and mostly covering 2 equal width columns.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* In the right column, a button is available for posting/sharing a new life hack. Also a randomly-picked hack is displayed at page load referred to as (Hack of the )H.O.T. Moment which can change at any given moment.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* In the other section, there is the Feed column in which content is mounted on different tabs. There are currently 4 tabs which can be toggled and are as follows - New(s), recently added hacks; Lit As F-ive, top 5 most liked hacks; searcHacks, a search bar for finding hacks according to tag associated with the post; and lastly, WT-Hack, hacks that have been flagged for review (either deemed as suspicious or inappropriate).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+* For each post, a random pre-made avatar is assigned without any regard to the sexual identity of the user. A post will also generate a Like button, a delete button and a flag button. Name, email (to be used as verification for deleting own post), tag(s) related to the hack and summary description of the hack are all required information in the form. There is also an option to add a link to a source, either picture or videos.
 
-## Learn More
+* All posts are stored in the database and are accessed through API queries using appropriate routers.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* A post can generate as many Likes (anyone can press it) but it is merely used for fun and perhaps tracking. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* If a post is deemed inappropriate or suspicious (especially for link attachments), any user can flag it and it will be up to the admin to review and take cation (delete or approve).
 
-### Code Splitting
+* Both the Likes and Flag use the Update functionality.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+* Only the original user that posted a specific hack can delete using the email associated to the post at the time it was written. Once deleted, it is gone permanently.
 
-### Analyzing the Bundle Size
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import { Search, Grid, Feed, Icon, Popup, Modal, Form, Input, Button, Confirm } from 'semantic-ui-react'
+import { Search, Grid, Feed, Icon, Modal, Form, Input, Button } from 'semantic-ui-react'
 import API from "../utils/API"
 import MessageNegative  from "./ErrorMsg";
 import Moment from 'react-moment';
@@ -35,6 +35,7 @@ export default class SearchComponent extends Component {
   state = {
     email: '',
     message: true,
+    modalOpen: false 
   }
 
   handleOpen = () => this.setState({ modalOpen: true })

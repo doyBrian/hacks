@@ -8,6 +8,7 @@ class CardGroups extends Component {
 state = {
     password: '',
     message: true,
+    modalOpen: false 
 }
 
 handleOpen = () => this.setState({ modalOpen: true })

@@ -78,7 +78,7 @@ class FormComponent extends Component {
         .then(res => console.log(res.data))
         .catch(err => console.log(err));
       
-      window.location.reload()
+      this.props.loadHacks()
     }
 
     //clear form
@@ -169,9 +169,8 @@ class FormComponent extends Component {
         basic
         />
 
-        <Form.Field
+        <Button
           name='submit'
-          control={Button}
           content='Hack Away'
           label='Verify all your information before submitting!'
           disabled = {!(this.state.name && this.state.email && this.state.tag && this.state.summary)}

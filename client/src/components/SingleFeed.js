@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Feed, Icon, Popup, Modal, Form, Input, Button } from 'semantic-ui-react'
+import { Feed, Icon, Modal, Form, Input, Button } from 'semantic-ui-react'
 import Moment from 'react-moment';
 import API from "../utils/API";
 import MessageNegative  from "./ErrorMsg";
@@ -9,11 +9,8 @@ class MiniFeed extends Component {
   state = {
     email: '',
     message: true,
-    hackoftheday: {}
-  }
-
-  componentDidMount() {
-    this.setState({hacoftheday: {...this.props.hack}})
+    modalOpen: false,
+    hack: {}
   }
 
   handleOpen = () => this.setState({ modalOpen: true })
@@ -29,7 +26,6 @@ class MiniFeed extends Component {
   handleDelete = (id, email) => {
     console.log(id)
     if (email === this.state.email) {
-        this.setState({ hackoftheday: this.props.filteredhacks[Math.floor(Math.random() * this.props.filteredhacks.length)]})
       API.deleteHack(id)
       .then(res => this.props.loadHacks())
       .catch(err => console.log(err));    
@@ -41,11 +37,18 @@ class MiniFeed extends Component {
 
   handleFlag = (id) => {
     console.log(id)
-    this.setState({ open: false })
     API.updateHack(id, {
       flagged: true
     })
-      .then(res => this.props.loadHacks() )
+      .then(res => this.props.loadHacks())
+      .catch(err => console.log(err));
+  }
+
+  handleClick = (id, meta) => {
+    API.updateHack(id, {
+      meta: meta + 1
+    })
+      .then(res => this.props.loadHacks())
       .catch(err => console.log(err));
   }
 
@@ -95,7 +98,7 @@ class MiniFeed extends Component {
               <a href={this.props.hack.link} target="blank">{this.props.hack.link}</a><br></br>
               <Feed.Meta>
                 <Feed.Like>
-                  <Icon color='red' name='like'  onClick = {() => this.props.handleClick(this.props.hack._id, this.props.hack.meta)} />
+                  <Icon color='red' name='like'  onClick = {() => this.handleClick(this.props.hack._id, this.props.hack.meta)} />
                   {this.props.hack.meta} Likes
                 </Feed.Like>
               </Feed.Meta>

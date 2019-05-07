@@ -5,6 +5,7 @@ import MiniFeed  from "./components/SingleFeed";
 import FormComponent  from "./components/Form";
 import SearchComponent from './components/Search';
 import CardGroups from './components/Card';
+import ModalOpening from './components/Modal';
 import API from "./utils/API";
 import "./style.css";
 
@@ -32,6 +33,7 @@ class App extends Component {
           this.setState({ hacks: res.data });
           this.setState({ filteredhacks: this.state.hacks.filter(hack => hack.flagged !== true) })
           this.setState({ hackoftheday: this.state.filteredhacks[Math.floor(Math.random() * this.state.filteredhacks.length)]})
+          console.log(this.state.hackoftheday)
           this.setState({ recent: this.state.filteredhacks.slice(0,5)})
           this.setState({ flaggedhacks: this.state.hacks.filter(hack => hack.flagged === true) })
           this.state.filteredhacks.sort(function (a, b) {
@@ -43,7 +45,7 @@ class App extends Component {
           this.setState({ top5arr: this.state.filteredhacks.slice(0,5)}) 
           this.setState({ panes : [
             { menuItem: 'New(s)', render: () => <Tab.Pane renderActiveOnly={false} attached={false}><Header as='h4' block><Header.Content>Just In!</Header.Content></Header><FeedComponent hacks={this.state.recent} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
-            { menuItem: 'Hi Five', render: () => <Tab.Pane renderActiveOnly={false} attached={false}><Header as='h4' block><Header.Content>Top 5 Most Likes</Header.Content></Header><FeedComponent hacks={this.state.top5arr} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
+            { menuItem: 'Lit As F-ive', render: () => <Tab.Pane renderActiveOnly={false} attached={false}><Header as='h4' block><Header.Content>Top 5 Most Likes</Header.Content></Header><FeedComponent hacks={this.state.top5arr} handleClick={this.handleClick} loadHacks={this.loadHacks}/></Tab.Pane> },
             { menuItem: 'searcHacks', render: () => <Tab.Pane renderActiveOnly={false} attached={false}><SearchComponent filteredhacks={this.state.filteredhacks} loadHacks={this.loadHacks} /></Tab.Pane> },
             { menuItem: 'WT-Hack', render: () => <Tab.Pane renderActiveOnly={false} attached={false}><Header as='h4' inverted color='red' block><Header.Content>Flagged for Review (Admin Access Only)</Header.Content></Header><CardGroups hacks={this.state.flaggedhacks} loadHacks={this.loadHacks} /></Tab.Pane> }    
           ]})
@@ -62,6 +64,7 @@ class App extends Component {
   render() {
     return (
       <Container>
+      <ModalOpening />
       <h1>hacks</h1>
         <Grid>
           <Grid.Row columns={2}>
@@ -73,15 +76,15 @@ class App extends Component {
               <Grid.Row>
                 <Grid.Column>
                   <Header as='h2' content='Welcome Life Hackers!' />
-                  Having a lightbulb moment? <Icon color='yellow' size='large' name='lightbulb' />
-                  <FormComponent />
+                  Have a (ding!) lightbulb moment? <Icon color='yellow' size='large' name='lightbulb' />
+                  <FormComponent loadHacks={this.loadHacks} />
                 </Grid.Column>
                 <Divider /> 
               </Grid.Row>
               <Grid.Row>
               <Segment secondary>
               <Header as='h4' color='teal' attached='top'><Header.Content>Hack Of The (H.O.T) Moment</Header.Content></Header>
-              <MiniFeed hack={this.state.hackoftheday} handleClick={this.handleClick} loadHacks={this.loadHacks} filteredhacks={this.state.filteredhacks} />
+              <MiniFeed hack={this.state.hackoftheday} loadHacks={this.loadHacks} filteredhacks={this.state.filteredhacks} />
               </Segment>
               </Grid.Row>
               </Grid.Column> 
